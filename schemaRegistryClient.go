@@ -30,6 +30,7 @@ type ISchemaRegistryClient interface {
 	DeleteSubject(subject string, permanent bool) error
 	SetCredentials(username string, password string)
 	SetTimeout(timeout time.Duration)
+	SetTransport(transport *http.Transport)
 	CachingEnabled(value bool)
 	CodecCreationEnabled(value bool)
 	IsSchemaCompatible(subject, schema, version string, schemaType SchemaType, isKey bool) (bool, error)
@@ -354,6 +355,12 @@ func (client *SchemaRegistryClient) SetCredentials(username string, password str
 // they timeout. FYI, It defaults to five seconds.
 func (client *SchemaRegistryClient) SetTimeout(timeout time.Duration) {
 	client.httpClient.Timeout = timeout
+}
+
+// SetTransport allows the client to be reconfigured with a
+// httpClient transport to get mutually authenticated TLS working
+func (client *SchemaRegistryClient) SetTransport(transport *http.Transport) {
+	client.httpClient.Transport = transport
 }
 
 // CachingEnabled allows the client to cache any values

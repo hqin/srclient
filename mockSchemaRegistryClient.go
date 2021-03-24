@@ -3,6 +3,7 @@ package srclient
 import (
 	"errors"
 	"fmt"
+	"net/http"
 	"net/url"
 	"regexp"
 	"sort"
@@ -179,6 +180,10 @@ func (mck MockSchemaRegistryClient) SetCredentials(username string, password str
 
 func (mck MockSchemaRegistryClient) SetTimeout(timeout time.Duration) {
 	// Nothing because there is no timeout for cache
+}
+
+func (mck MockSchemaRegistryClient) SetTransport(transportt *http.Transport) {
+	// Nothing because there is no transport for cache
 }
 
 func (mck MockSchemaRegistryClient) CachingEnabled(value bool) {
